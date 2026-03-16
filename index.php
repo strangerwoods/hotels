@@ -8,6 +8,15 @@
 </head>
 
 <body>
+
+	<form action="">
+		<input type="checkbox" id="parking" name="parking">
+		<label for="parking">Presenza Parking</label>
+		<input type="number" name="parking_vote" id="parking_vote" placeholder="vote">
+		<label for="parking_vote">Voto Parcheggio</label>
+		<button>Filter</button>
+	</form>
+
 	<?php
 
 	$hotels = [
@@ -62,6 +71,18 @@
   		</tr>';
 
 	foreach ($hotels as $hotel) {
+
+		if (isset($_GET["parking"]) && $_GET["parking"] == "on") {
+			if ($hotel['parking'] == false) {
+				continue;
+			}
+		}
+
+		if (isset($_GET["parking_vote"]) && $_GET["parking_vote"] != "") {
+			if ($hotel['vote'] < $_GET["parking_vote"]) {
+				continue;
+			}
+		}
 
 		echo "<tr>";
 		echo "<td>" . $hotel['name'] . "</td>";
